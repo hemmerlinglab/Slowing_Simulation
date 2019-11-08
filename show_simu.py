@@ -21,7 +21,7 @@ for k in arr.keys():
 def bin_data(no_of_particles, x, t, v, det_pos):
 
     t_arr = np.linspace(0,30,120) * 1e-3
-    v_arr = np.linspace(0,500,100)
+    v_arr = np.linspace(0,700,100)
 
     result = np.zeros([len(v_arr)+1, len(t_arr)+1])
 
@@ -45,14 +45,13 @@ def bin_data(no_of_particles, x, t, v, det_pos):
 det_pos = 0.8 # in m
 
 
-
 # some plotting
 vi = vx[:, 0]
 
-plt.figure(figsize = (10,6))
+plt.figure(figsize = (12,12))
 
 for k in range(no_of_particles):
-    plt.subplot(2,3,1)
+    plt.subplot(3,3,1)
     plt.plot(ts * 1e3, sx[k, :])
 
 plt.xlabel('Time (ms)')
@@ -60,19 +59,27 @@ plt.ylabel('Position (m)')
 plt.tight_layout()
 
 for k in range(no_of_particles):
-    plt.subplot(2,3,2)
+    plt.subplot(3,3,2)
     plt.plot(ts * 1e3, vx[k, :])
 
 plt.xlabel('Time (ms)')
 plt.ylabel('Velocity (m/s)')
 plt.tight_layout()
 
+plt.axvline(slowing_time * 1e3, ls='--')
+
+
+
 for k in range(no_of_particles):
-    plt.subplot(2,3,3)
+    plt.subplot(3,3,3)
     plt.plot(sx[k, :], vx[k, :])
 
 plt.xlabel('Position (m)')
 plt.ylabel('Velocity (m/s)')
+
+plt.axvline(L_start, ls='--')
+plt.axvline(L_start + Zeeman_length, ls='--')
+
 plt.tight_layout()
 
 
@@ -86,31 +93,39 @@ vf = vf[sort_ind]
 vf_noslow = vf_noslow[sort_ind]
 
 
-plt.subplot(2,3,4)
+plt.subplot(3,3,4)
 plt.plot(vi, vf)
 plt.plot(vi, vi, 'r--', lw = 0.25)
+plt.axhline(laser_detuning, ls='--') # detuning is in m/s
+
 plt.xlabel('Initial velocity (m/s)')
 plt.ylabel('Final velocity (m/s)')
 
 plt.tight_layout()
 
+plt.subplot(3,3,7)
 
-plt.subplot(2,3,5)
+plt.hist(tx[:, 0] * 1e3, bins = no_of_particles)
+plt.xlabel('Initial times (ms)')
+plt.tight_layout()
+
+plt.subplot(3,3,8)
 
 plt.hist(sx[:, 0] * 1e3, bins = no_of_particles)
 plt.xlabel('Initial position (mm)')
+plt.tight_layout()
 
-plt.subplot(2,3,6)
+plt.subplot(3,3,9)
 
 plt.hist(vi, bins = no_of_particles)
 plt.xlabel('Initial velocities (m/s)')
-
+plt.tight_layout()
 
 
 
 cmax = 5.0
 
-plt.figure()
+plt.figure(figsize=(10,10))
 
 (t_arr, v_arr, result_noslow) = bin_data(no_of_particles, sx_noslow, ts, vx_noslow, det_pos)
 
