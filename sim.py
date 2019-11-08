@@ -66,7 +66,7 @@ for k in range(tsteps-1):
 
     for n in part_arr[do_simu]:
 
-        if tx[n, 0] <= ts[-1]:
+        if True:#tx[n, 0] <= ts[-1]:
             # only start propagating if particle is emitted from cell already
 
             s0 = 2.0*omega/gamma1 # check
@@ -76,10 +76,10 @@ for k in range(tsteps-1):
             
             # Zeeman slower: dE = muB * gF * B == hbar * k * v_max
             # B0 = hbar * k * v_max/ (muB * gF)
-            # B(x) = B0 * sqrt(1 - x^2/L0^2)
+            # B(x) = Bg + B0 * sqrt(1 - x^2/L0^2)
 
             if (sx[n, k] > L_start) and (sx[n, k] < L_start + Zeeman_length):
-                detuning = k_vec * (vx[n, k] - laser_detuning) - k_vec * v_max_B * np.sqrt(1 - (sx[n, k] - L_start)**2/Zeeman_length**2)
+                detuning = k_vec * (vx[n, k] - laser_detuning - v_max_Boffset - v_max_B0 * np.sqrt(1 - (sx[n, k] - L_start)/Zeeman_length))
             else:
                 detuning = k_vec * (vx[n, k] - laser_detuning)
             
@@ -139,14 +139,15 @@ vx_noslow = vx_noslow[:, 0::skip_points]
 
 
 
-B0 = hbar * k_vec * v_max_B / (muB * gF)
+B0 = hbar * k_vec * v_max_B0 / (muB * gF)
+Boffset = hbar * k_vec * v_max_Boffset / (muB * gF)
 
 
 f = open(filename,'r')
 
 arr = {}
 
-arr = save_to_arr(['no_of_particles', 'dt','laser_detuning','L_start', 'Zeeman_length', 'slowing_time','ts','tx','sx','vx','sx_noslow','vx_noslow', 'B0'])
+arr = save_to_arr(['no_of_particles', 'dt','laser_detuning','L_start', 'Zeeman_length', 'slowing_time','ts','tx','sx','vx','sx_noslow','vx_noslow', 'B0', 'Boffset'])
 
 arr['init_file'] = f.readlines()
 

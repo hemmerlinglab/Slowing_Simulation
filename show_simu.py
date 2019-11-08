@@ -80,6 +80,8 @@ plt.ylabel('Velocity (m/s)')
 plt.axvline(L_start, ls='--')
 plt.axvline(L_start + Zeeman_length, ls='--')
 
+plt.text(0.8, 300.0, 'B0 = ' + str(B0))
+
 plt.tight_layout()
 
 
