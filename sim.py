@@ -20,7 +20,7 @@ k_vec = 2*np.pi/lambda_yb
 
 
 
-mass = 40 * amu
+mass = 174 * amu
 
 
 
@@ -49,10 +49,9 @@ exec(open(filename).read(), globals())
 # get number of particles
 no_of_particles = sx.shape[0]
 
-
 # mask array to check if simulation should stop for particle
 do_simu = np.ones(no_of_particles, dtype = bool)
-part_arr = np.array(np.linspace(0,no_of_particles-1, no_of_particles), dtype = np.int)
+part_arr = np.array(np.linspace(0,no_of_particles-1, no_of_particles), dtype = np.int64)
 
 
 # sx[m, k] : m = particle number, k = time step
@@ -66,7 +65,7 @@ for k in range(tsteps-1):
 
     for n in part_arr[do_simu]:
 
-        if True:#tx[n, 0] <= ts[-1]:
+        if tx[n, 0] <= ts[-1]:
             # only start propagating if particle is emitted from cell already
 
             s0 = 2.0*omega/gamma1 # check
@@ -78,7 +77,7 @@ for k in range(tsteps-1):
             # B0 = hbar * k * v_max/ (muB * gF)
             # B(x) = Bg + B0 * sqrt(1 - x^2/L0^2)
 
-            if (sx[n, k] > L_start) and (sx[n, k] < L_start + Zeeman_length):
+            if (use_zeeman_slower) and (sx[n, k] > L_start) and (sx[n, k] < L_start + Zeeman_length):
                 detuning = k_vec * (vx[n, k] - laser_detuning - v_max_Boffset - v_max_B0 * np.sqrt(1 - (sx[n, k] - L_start)/Zeeman_length))
             else:
                 detuning = k_vec * (vx[n, k] - laser_detuning)

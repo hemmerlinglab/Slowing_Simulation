@@ -17,18 +17,20 @@ vx = np.zeros([no_of_particles, tsteps])
 sx[:, 0] = 0.0 #np.random.normal(-50.0e-3, 50.0e-3, no_of_particles)
 
 # initial velocities
-vx[:, 0] = np.random.normal(500.0, 5.0, no_of_particles)
+vx[:, 0] = np.random.normal(150.0, 5.0, no_of_particles)
 
 # initial times
 tx[:, 0] = np.random.poisson(1.0, no_of_particles) * 1e-4
 #tx[:, 0] = np.random.normal(0.5e-3, 2.5e-3, no_of_particles)
 
 
+use_zeeman_slower = False
+
 v_max_B0 = 500.0
 v_max_Boffset = -v_max_B0/2.0
 
 
-laser_detuning = 10.0 + -v_max_Boffset # in m/s
+laser_detuning = 120.0 #+ -v_max_Boffset # in m/s
 
 
 
