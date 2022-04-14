@@ -1,11 +1,11 @@
 # load initial conditions for particles
 
-no_of_particles = 100
+no_of_particles = 200
 
 skip_points = 100
 
 dt = 1e-6
-tsteps = np.int(60e-3/dt)
+tsteps = np.int64(60e-3/dt)
 
 
 tx = np.zeros([no_of_particles, tsteps])
@@ -34,7 +34,7 @@ laser_detuning = 120.0 #+ -v_max_Boffset # in m/s
 
 
 
-slowing_time = 10.0e-3
+slowing_time = 5.0e-3
 
 L_start = 0.1
 Zeeman_length = 0.2

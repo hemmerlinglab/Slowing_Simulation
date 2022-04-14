@@ -20,8 +20,8 @@ for k in arr.keys():
 
 def bin_data(no_of_particles, x, t, v, det_pos):
 
-    t_arr = np.linspace(0,30,120) * 1e-3
-    v_arr = np.linspace(0,700,100)
+    t_arr = np.linspace(0,60,120) * 1e-3
+    v_arr = np.linspace(0,160,100)
 
     result = np.zeros([len(v_arr)+1, len(t_arr)+1])
 
@@ -159,13 +159,26 @@ print(np.sum(np.sum(result)))
 
 
 plt.subplot(2,2,3)
-plt.plot( t_arr[:-1] * 1e3, np.sum(result, axis = 0) )
-plt.plot( t_arr[:-1] * 1e3, np.sum(result_noslow, axis = 0) )
+plt.plot( t_arr[:-1] * 1e3, np.sum(result, axis = 0) , label = 'Slowing')
+plt.plot( t_arr[:-1] * 1e3, np.sum(result_noslow, axis = 0), label = 'No Slowing')
+
+plt.xlabel('Time (ms)')
+plt.ylabel('#')
+
+plt.legend()
+
 plt.tight_layout()
 
+
 plt.subplot(2,2,4)
-plt.plot( v_arr[:-1], np.sum(result, axis = 1) )
-plt.plot( v_arr[:-1], np.sum(result_noslow, axis = 1) )
+plt.plot( v_arr[:-1], np.sum(result, axis = 1), label = 'Slowing')
+plt.plot( v_arr[:-1], np.sum(result_noslow, axis = 1), label = 'No Slowing')
+
+plt.xlabel('Velocity (m/s)')
+plt.ylabel('#')
+
+plt.legend()
+
 plt.tight_layout()
 
 plt.show()
