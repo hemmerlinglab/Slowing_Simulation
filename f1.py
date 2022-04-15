@@ -48,7 +48,7 @@ linewidth = 30.0e6
 gamma1 = 2*np.pi * linewidth
 #omega = 0.25 * gamma1 
 
-s0 = 0.25
+s0 = 0.5
 
 sx_noslow = np.copy(sx)
 vx_noslow = np.copy(vx)

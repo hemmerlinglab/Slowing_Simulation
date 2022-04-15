@@ -42,7 +42,7 @@ def bin_data(no_of_particles, x, t, v, det_pos):
 
         
 
-det_pos = 0.8 # in m
+det_pos = 0.7 # in m
 
 
 # some plotting
