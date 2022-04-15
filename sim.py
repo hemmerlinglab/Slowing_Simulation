@@ -68,7 +68,7 @@ for k in range(tsteps-1):
         if tx[n, 0] <= ts[-1]:
             # only start propagating if particle is emitted from cell already
 
-            s0 = 2.0*omega/gamma1 # check
+            #s0 = 2.0*omega/gamma1 # check
 
             # single laser detuning
             # detuning = k_vec * (vx[n, k] - laser_detuning)
@@ -104,13 +104,13 @@ for k in range(tsteps-1):
 
 
             # if particle hits the wall or if particle turns around, stop simulation
-            if (sx[n, k+1] >= 1.0) or (vx[n, k+1] <= 0.0):
+            if (sx[n, k+1] >= s_max) or (vx[n, k+1] <= 0.0):
                 do_simu[n] = False
-                sx[n, k+1:] = 1.0
+                sx[n, k+1:] = s_max
                 vx[n, k+1:] = vx[n, k+1]
 
-            if sx_noslow[n, k+1] >= 1.0:
-                sx_noslow[n, k+1:] = 1.0
+            if sx_noslow[n, k+1] >= s_max:
+                sx_noslow[n, k+1:] = s_max
                 vx_noslow[n, k+1:] = vx_noslow[n, k+1]
 
 

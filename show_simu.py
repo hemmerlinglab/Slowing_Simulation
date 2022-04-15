@@ -21,7 +21,7 @@ for k in arr.keys():
 def bin_data(no_of_particles, x, t, v, det_pos):
 
     t_arr = np.linspace(0,60,120) * 1e-3
-    v_arr = np.linspace(0,160,100)
+    v_arr = np.linspace(0,180,100)
 
     result = np.zeros([len(v_arr)+1, len(t_arr)+1])
 

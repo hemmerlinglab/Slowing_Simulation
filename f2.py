@@ -44,7 +44,7 @@ Zeeman_length = 0.2
 gF = 2.0
 v_max = 400.0
 
-linewidth = 30.0e6
+linewidth = 10.0e6
 gamma1 = 2*np.pi * linewidth
 #omega = 0.25 * gamma1 
 
