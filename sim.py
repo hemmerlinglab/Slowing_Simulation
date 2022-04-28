@@ -77,12 +77,25 @@ for k in range(tsteps-1):
             # B0 = hbar * k * v_max/ (muB * gF)
             # B(x) = Bg + B0 * sqrt(1 - x^2/L0^2)
 
+            ###############################################################
+            # slowing laser
+            ###############################################################
+            
             if (use_zeeman_slower) and (sx[n, k] > L_start) and (sx[n, k] < L_start + Zeeman_length):
                 detuning = k_vec * (vx[n, k] - laser_detuning - v_max_Boffset - v_max_B0 * np.sqrt(1 - (sx[n, k] - L_start)/Zeeman_length))
             else:
                 detuning = k_vec * (vx[n, k] - laser_detuning)
-            
+
             force = -hbar * k_vec * gamma1 * s0/(1.0+s0+4.0*(detuning/gamma1)**2)
+
+            ###############################################################
+            # mot laser
+            ###############################################################
+
+            if (use_mot_laser) and (sx[n, k] > mot_position+mot_width) and (sx[n, k] < mot_position-mot_width):
+                detuning_mot = k_vec * (vx[n, k] - mot_laser_detuning)
+            
+                force += -hbar * k_vec * gamma1 * s0_mot/(1.0+s0_mot+4.0*(detuning_mot/gamma1)**2)
 
             # F = hbar * k * Gamma_eff * dt
             # F = m * dv/dt -> dv = F/m * dt + laser in -x direction
