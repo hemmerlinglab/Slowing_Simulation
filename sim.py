@@ -86,28 +86,25 @@ for k in range(tsteps-1):
             else:
                 detuning = k_vec * (vx[n, k] - laser_detuning)
 
-            force = -hbar * k_vec * gamma1 * s0/(1.0+s0+4.0*(detuning/gamma1)**2)
+            # if particle is out of the cell and the slowing laser is still on, apply laser force
+            if (ts[-1] <= slowing_time) and (sx[n, k] >= 0.0): 
+                force = -hbar * k_vec * gamma1 * s0/(1.0+s0+4.0*(detuning/gamma1)**2)
+            else:
+                force = 0.0
 
             ###############################################################
             # mot laser
             ###############################################################
 
-            if (use_mot_laser) and (sx[n, k] > mot_position+mot_width) and (sx[n, k] < mot_position-mot_width):
+            if (use_mot_laser) and (sx[n, k] > mot_position-mot_width) and (sx[n, k] < mot_position+mot_width):
                 detuning_mot = k_vec * (vx[n, k] - mot_laser_detuning)
-            
                 force += -hbar * k_vec * gamma1 * s0_mot/(1.0+s0_mot+4.0*(detuning_mot/gamma1)**2)
 
             # F = hbar * k * Gamma_eff * dt
             # F = m * dv/dt -> dv = F/m * dt + laser in -x direction
             
             # propagate particle
-
-            # if particle is out of the cell and the slowing laser is still on, apply laser force
-            if (ts[-1] <= slowing_time) and (sx[n, k] >= 0.0):
-            #if (sx[n, k] >= 0.0):
-                dvx = force/mass * dt
-            else:
-                dvx = 0.0
+            dvx = force/mass * dt
 
             vx[n, k+1] = vx[n, k] + dvx
             sx[n, k+1] = sx[n, k] + vx[n, k+1] * dt

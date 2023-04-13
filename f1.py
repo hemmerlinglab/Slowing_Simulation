@@ -1,6 +1,6 @@
 # load initial conditions for particles
 
-no_of_particles = 50
+no_of_particles = 500
 
 skip_points = 100
 
@@ -31,13 +31,10 @@ v_max_B0 = 500.0
 v_max_Boffset = -v_max_B0/2.0
 
 
-laser_detuning = 120.0 #+ -v_max_Boffset # in m/s
-
-
 # end of simulation, i.e. position of the MOT or a wall
 s_max = 0.8
 
-slowing_time = 4.0e-3
+
 
 L_start = 0.1
 Zeeman_length = 0.2
@@ -48,19 +45,20 @@ linewidth = 28.0e6
 gamma1 = 2*np.pi * linewidth
 #omega = 0.25 * gamma1 
 
-#s0 = 0.5
 
+
+# slowing laser
+slowing_time = 8.0e-3
 s0 = (20 / (np.pi*(0.5)**2)) / 63 # 63 mW/cm^2
-
-
+laser_detuning = 100.0 # in m/s
 
 
 # mot laser
 use_mot_laser = True
-s0_mot = (5 / (np.pi*(0.5)**2)) / 63 # 63 mW/cm^2
+s0_mot = (2*10 / (np.pi*(0.5)**2)) / 63 # 63 mW/cm^2
 mot_position = 0.7
 mot_width = 1e-2
-mot_laser_detuning = -5.0 # m/s
+mot_laser_detuning = 5.0 # m/s
 
 
 
